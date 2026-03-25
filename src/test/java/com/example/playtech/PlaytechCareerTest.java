@@ -15,6 +15,18 @@ public class PlaytechCareerTest extends BaseTest {
     private static List<String> researchAreasResult;
     private static String jobLinkResult;
 
+    private static final By TEAM_DROPDOWN =
+            By.xpath("//*[contains(text(), 'Select Team')]");
+    private static final By TEAM_OPTIONS =
+            By.xpath("//div[contains(@class,'teams-column__item')]//span");
+    private static final By RESEARCH_BUTTON =
+            By.cssSelector("button.accordion-button[data-bs-target='#collapse-6-4-6']");
+    private static final By RESEARCH_CONTENT =
+            By.id("collapse-6-4-6");
+    private static final By RESEARCH_AREA_ITEMS = By.xpath(".//ul/li/ul/li");
+    private static final By JOB_ITEMS =
+            By.cssSelector(".jobs-wrap .job-item[data-location='estonia']");
+
     @Test
     @Order(1)
     void openTeamDropdown() {
@@ -22,19 +34,13 @@ public class PlaytechCareerTest extends BaseTest {
         handleCookieBanner();
 
         WebElement teamDropdown = wait.until(
-                ExpectedConditions.elementToBeClickable(
-                        By.xpath("//*[contains(text(), 'Select Team')]")
-                )
-        );
+                ExpectedConditions.elementToBeClickable(TEAM_DROPDOWN));
 
         scrollIntoView(teamDropdown);
 
         teamDropdown.click();
         List<WebElement> options = wait.until (
-                ExpectedConditions.visibilityOfAllElementsLocatedBy(
-                        By.xpath("//div[contains(@class,'teams-column__item')]//span")
-                )
-        );
+                ExpectedConditions.visibilityOfAllElementsLocatedBy(TEAM_OPTIONS));
 
         List<String> teams = new ArrayList<>();
 
@@ -62,18 +68,12 @@ public class PlaytechCareerTest extends BaseTest {
         handleCookieBanner();
 
         WebElement researchButton = wait.until(
-                ExpectedConditions.presenceOfElementLocated(
-                        By.cssSelector("button.accordion-button[data-bs-target='#collapse-6-4-6']")
-                )
-        );
+                ExpectedConditions.presenceOfElementLocated(RESEARCH_BUTTON));
 
         scrollIntoView(researchButton);
 
         WebElement researchContent = wait.until(
-                ExpectedConditions.presenceOfElementLocated(
-                        By.id("collapse-6-4-6")
-                )
-        );
+                ExpectedConditions.presenceOfElementLocated(RESEARCH_CONTENT));
 
         String contentClasses = researchContent.getAttribute("class");
 
@@ -82,14 +82,9 @@ public class PlaytechCareerTest extends BaseTest {
         }
 
         researchContent = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(
-                        By.id("collapse-6-4-6")
-                )
-        );
+                ExpectedConditions.visibilityOfElementLocated(RESEARCH_CONTENT));
 
-        List<WebElement> areaItems = researchContent.findElements(
-                By.xpath(".//ul/li/ul/li")
-        );
+        List<WebElement> areaItems = researchContent.findElements(RESEARCH_AREA_ITEMS);
 
         List<String> researchAreas = new ArrayList<>();
 
@@ -117,13 +112,9 @@ public class PlaytechCareerTest extends BaseTest {
         driver.get("https://www.playtechpeople.com/jobs-our/?activeLocation=Estonia");
         handleCookieBanner();
 
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
-                By.cssSelector(".jobs-wrap .job-item[data-location='estonia']")
-        ));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(JOB_ITEMS));
 
-        List<WebElement> jobs = driver.findElements(
-                By.cssSelector(".jobs-wrap .job-item[data-location='estonia']")
-        );
+        List<WebElement> jobs = driver.findElements(JOB_ITEMS);
 
         List<String> links = new ArrayList<>();
 
@@ -147,9 +138,9 @@ public class PlaytechCareerTest extends BaseTest {
         if (foundLink != null) {
             System.out.println("Job Link (Tallinn & Tartu): " + foundLink);
         }
-
-        assertFalse(foundLink == null, "No matching job found.");
         jobLinkResult = foundLink;
+        assertFalse(foundLink == null, "No matching job found.");
+
     }
 
     @AfterAll

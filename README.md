@@ -8,10 +8,9 @@ The solution is implemented using:
 - Selenium WebDriver
 - JUnit 5
 - Maven
+- File output (.txt export)
 
 The goal of the assignment is to automate interaction with the Playtech careers website and extract specific information.
-
----
 
 ## Project Setup
 
@@ -85,3 +84,14 @@ Page content is validated using page source text to ensure robustness across dif
 - Explicit waits are used to handle dynamic content and ensure test stability
 - Basic assertions are included to verify that expected data is successfully extracted
 - SLF4J logging dependency is added to suppress default logging warnings during test execution
+
+### 4. Results export (.txt)
+
+As a bonus task, test results are exported into a `results.txt` file.
+
+Implementation approach:
+- Each test stores its extracted data (teams, research areas, job link)
+- Test execution order is controlled using `@TestMethodOrder` and `@Order`
+- After all tests complete, results are written to file using an `@AfterAll` method
+
+An example `results.txt` file is included in the repository.
