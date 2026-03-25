@@ -62,3 +62,26 @@ The research areas are located within a nested unordered list structure.
 A specific XPath was used to target only the inner list items containing the actual research areas.
 
 Only the relevant list items are printed, excluding descriptive text.
+
+### 3. Job link extraction (Tallinn & Tartu)
+
+The goal of this test is to find a job listing in Estonia that is available in both Tallinn and Tartu, and print its link.
+
+Approach:
+
+- Navigate to the "All Jobs" page filtered by Estonia
+- Extract job links from the underlying job list
+- Iterate through each job link
+- Open each job detail page
+- Check whether the page contains both "Tallinn" and "Tartu"
+- Stop execution once a matching job is found
+
+Notes:
+
+The visible job list differs from the underlying DOM structure, therefore filtering is applied using the data-location='estonia' attribute
+Page content is validated using page source text to ensure robustness across different job layouts
+
+## Additional Notes
+- Explicit waits are used to handle dynamic content and ensure test stability
+- Basic assertions are included to verify that expected data is successfully extracted
+- SLF4J logging dependency is added to suppress default logging warnings during test execution

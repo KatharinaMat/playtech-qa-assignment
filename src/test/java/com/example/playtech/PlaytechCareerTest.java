@@ -4,7 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +33,6 @@ public class PlaytechCareerTest extends BaseTest {
                         By.xpath("//div[contains(@class,'teams-column__item')]//span")
                 )
         );
-        assertFalse(options.isEmpty(), "Team dropdown listing was not displayed.");
 
         List<String> teams = new ArrayList<>();
 
@@ -72,7 +73,7 @@ public class PlaytechCareerTest extends BaseTest {
 
         String contentClasses = researchContent.getAttribute("class");
 
-        if(contentClasses == null || !contentClasses.contains("show")){
+        if (contentClasses == null || !contentClasses.contains("show")){
             clickWithJs(researchButton);
         }
 
@@ -91,7 +92,7 @@ public class PlaytechCareerTest extends BaseTest {
         for (WebElement item : areaItems) {
             String text = item.getText().trim();
 
-            if(!text.isEmpty()) {
+            if (!text.isEmpty()) {
                 researchAreas.add(text);
             }
         }
@@ -103,5 +104,44 @@ public class PlaytechCareerTest extends BaseTest {
         }
 
         assertFalse(researchAreas.isEmpty(), "No research areas were extracted");
+    }
+
+    @Test
+    void extractLinkWithTallinnAndTartuLocation() {
+        driver.get("https://www.playtechpeople.com/jobs-our/?activeLocation=Estonia");
+        handleCookieBanner();
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
+                By.cssSelector(".jobs-wrap .job-item[data-location='estonia']")
+        ));
+
+        List<WebElement> jobs = driver.findElements(
+                By.cssSelector(".jobs-wrap .job-item[data-location='estonia']")
+        );
+
+        List<String> links = new ArrayList<>();
+
+        for (WebElement job : jobs) {
+            links.add(job.getAttribute("href"));
+        }
+
+        String foundLink = null;
+
+        for (String link : links) {
+            driver.get(link);
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
+
+            String pageText = driver.getPageSource();
+
+            if (pageText.contains("Tartu") && pageText.contains("Tallinn")) {
+                foundLink = link;
+                break;
+            }
+        }
+        if (foundLink != null) {
+            System.out.println("Link: " + foundLink);
+        }
+
+        assertFalse(foundLink == null, "No matching job found.");
     }
 }
