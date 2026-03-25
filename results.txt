@@ -1,0 +1,49 @@
+Playtech QA Assignment Results
+
+Teams count: 38
+- Administrative Services
+- Core Professional Services
+- Corporate Support
+- Customer Support
+- Data
+- Development Support
+- Distribution
+- Finance
+- G&A - Other
+- Gaming
+- General
+- General Management/Executive
+- General Research & Development
+- Generic - Other
+- Hardware
+- Human Resources
+- Information Technology
+- Legal
+- Live operations
+- Manufacturing
+- Marketing
+- Operations - Other
+- Outsourcing
+- Product Development
+- Quality
+- R&D - Other
+- Regulatory Affairs
+- Research
+- Retail Operations
+- Safety & Security
+- Sales
+- Sales & Marketing - Other
+- Sales Support
+- Services - Other
+- Software
+- Training/Education
+- Transportation
+- Web/E Commerce
+
+Research areas:
+- risk analysis using data derived from the use of BetBuddy
+- investigating product related risks such as slot game volatility, use of autoplay and the effects of stake limits
+- encouraging the use of safer gambling tools
+
+Job Link (Tallinn & Tartu):
+https://jobs.smartrecruiters.com/Playtech/744000103482765-mathematician-expert

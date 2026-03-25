@@ -1,20 +1,22 @@
 package com.example.playtech;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PlaytechCareerTest extends BaseTest {
 
+    private static List<String> teamsResult;
+    private static List<String> researchAreasResult;
+    private static String jobLinkResult;
+
     @Test
+    @Order(1)
     void openTeamDropdown() {
         driver.get("https://www.playtechpeople.com/");
         handleCookieBanner();
@@ -50,9 +52,11 @@ public class PlaytechCareerTest extends BaseTest {
             System.out.println(team);
         }
         assertFalse(teams.isEmpty(), "No teams were extracted.");
+        teamsResult = teams;
     }
 
     @Test
+    @Order(2)
     void extractResearchAreas() {
         driver.get("https://www.playtechpeople.com/life-at-playtech/");
         handleCookieBanner();
@@ -104,9 +108,11 @@ public class PlaytechCareerTest extends BaseTest {
         }
 
         assertFalse(researchAreas.isEmpty(), "No research areas were extracted");
+        researchAreasResult = researchAreas;
     }
 
     @Test
+    @Order(3)
     void extractLinkWithTallinnAndTartuLocation() {
         driver.get("https://www.playtechpeople.com/jobs-our/?activeLocation=Estonia");
         handleCookieBanner();
@@ -139,9 +145,19 @@ public class PlaytechCareerTest extends BaseTest {
             }
         }
         if (foundLink != null) {
-            System.out.println("Link: " + foundLink);
+            System.out.println("Job Link (Tallinn & Tartu): " + foundLink);
         }
 
         assertFalse(foundLink == null, "No matching job found.");
+        jobLinkResult = foundLink;
+    }
+
+    @AfterAll
+    static void exportResults() {
+          writeResultsToFile(
+                teamsResult != null ? teamsResult : new ArrayList<>(),
+                researchAreasResult != null ? researchAreasResult : new ArrayList<>(),
+                jobLinkResult
+        );
     }
 }
