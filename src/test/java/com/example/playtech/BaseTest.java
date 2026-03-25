@@ -57,4 +57,9 @@ public class BaseTest {
         ((org.openqa.selenium.JavascriptExecutor) driver)
                 .executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
     }
+
+    protected void clickWithJs(WebElement element) {
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript("arguments[0].click();", element);
+    }
 }

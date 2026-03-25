@@ -50,4 +50,58 @@ public class PlaytechCareerTest extends BaseTest {
         }
         assertFalse(teams.isEmpty(), "No teams were extracted.");
     }
+
+    @Test
+    void extractResearchAreas() {
+        driver.get("https://www.playtechpeople.com/life-at-playtech/");
+        handleCookieBanner();
+
+        WebElement researchButton = wait.until(
+                ExpectedConditions.presenceOfElementLocated(
+                        By.cssSelector("button.accordion-button[data-bs-target='#collapse-6-4-6']")
+                )
+        );
+
+        scrollIntoView(researchButton);
+
+        WebElement researchContent = wait.until(
+                ExpectedConditions.presenceOfElementLocated(
+                        By.id("collapse-6-4-6")
+                )
+        );
+
+        String contentClasses = researchContent.getAttribute("class");
+
+        if(contentClasses == null || !contentClasses.contains("show")){
+            clickWithJs(researchButton);
+        }
+
+        researchContent = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.id("collapse-6-4-6")
+                )
+        );
+
+        List<WebElement> areaItems = researchContent.findElements(
+                By.xpath(".//ul/li/ul/li")
+        );
+
+        List<String> researchAreas = new ArrayList<>();
+
+        for (WebElement item : areaItems) {
+            String text = item.getText().trim();
+
+            if(!text.isEmpty()) {
+                researchAreas.add(text);
+            }
+        }
+
+        System.out.println("Research areas:");
+
+        for (String area : researchAreas) {
+            System.out.println("- " + area);
+        }
+
+        assertFalse(researchAreas.isEmpty(), "No research areas were extracted");
+    }
 }

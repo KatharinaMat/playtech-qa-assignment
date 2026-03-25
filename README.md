@@ -32,7 +32,7 @@ The goal of the assignment is to automate interaction with the Playtech careers 
 ## Assumptions and Decisions
 Teams extraction
 The website presents team information in two places:
-1. The footer contains a shorter list of teams, including potentially overlapping labels such as:
+1. The footer contains a shorter list of teams (total count 11), including potentially overlapping labels such as:
 "IT" and "Information Technology" and "Security" and "Safety & Security"
 2. The "Select Team" dropdown on the main page contains a more extensive list of team categories.
 
@@ -48,3 +48,17 @@ The filter option "All" is excluded from the final team count.
 - Extract team names from "Select Team" dropdown
 - Exclude "All" 
 - Print extracted teams count and team names to console
+
+### 2. Research areas extraction
+
+The research areas are extracted from the "Research" accordion section under "Life at Playtech".
+
+Since the section is initially collapsed, the test:
+- scrolls to the element
+- checks whether the accordion is expanded
+- expands it if necessary
+
+The research areas are located within a nested unordered list structure.  
+A specific XPath was used to target only the inner list items containing the actual research areas.
+
+Only the relevant list items are printed, excluding descriptive text.
