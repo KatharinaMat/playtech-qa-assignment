@@ -1,11 +1,13 @@
-package com.example.playtech;
+package com.example.playtech.homework;
 
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -27,6 +29,7 @@ public class PlaytechCareerTest extends BaseTest {
     private static final By JOB_ITEMS =
             By.cssSelector(".jobs-wrap .job-item[data-location='estonia']");
 
+    // Extract team names from the homepage "Select Team" dropdown
     @Test
     @Order(1)
     void openTeamDropdown() {
@@ -39,7 +42,7 @@ public class PlaytechCareerTest extends BaseTest {
         scrollIntoView(teamDropdown);
 
         teamDropdown.click();
-        List<WebElement> options = wait.until (
+        List<WebElement> options = wait.until(
                 ExpectedConditions.visibilityOfAllElementsLocatedBy(TEAM_OPTIONS));
 
         List<String> teams = new ArrayList<>();
@@ -61,6 +64,7 @@ public class PlaytechCareerTest extends BaseTest {
         teamsResult = teams;
     }
 
+    // Expand the Research accordion if it is collapsed, then collect inner list items
     @Test
     @Order(2)
     void extractResearchAreas() {
@@ -77,7 +81,7 @@ public class PlaytechCareerTest extends BaseTest {
 
         String contentClasses = researchContent.getAttribute("class");
 
-        if (contentClasses == null || !contentClasses.contains("show")){
+        if (contentClasses == null || !contentClasses.contains("show")) {
             clickWithJs(researchButton);
         }
 
@@ -106,6 +110,7 @@ public class PlaytechCareerTest extends BaseTest {
         researchAreasResult = researchAreas;
     }
 
+    // Find a job in Estonia whose detail page mentions both Tallinn and Tartu
     @Test
     @Order(3)
     void extractLinkWithTallinnAndTartuLocation() {
@@ -145,7 +150,7 @@ public class PlaytechCareerTest extends BaseTest {
 
     @AfterAll
     static void exportResults() {
-          writeResultsToFile(
+        writeResultsToFile(
                 teamsResult != null ? teamsResult : new ArrayList<>(),
                 researchAreasResult != null ? researchAreasResult : new ArrayList<>(),
                 jobLinkResult

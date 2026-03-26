@@ -23,6 +23,7 @@ The goal of the assignment is to automate interaction with the Playtech careers 
 1. Clone the repository:
    ```bash
    git clone https://github.com/KatharinaMat/playtech-qa-assignment.git
+   ```
 2. Open the project in IntelliJ IDEA
 3. Run the test:
 - Navigate to PlaytechCareerTest

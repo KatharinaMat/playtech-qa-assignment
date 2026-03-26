@@ -1,4 +1,4 @@
-package com.example.playtech;
+package com.example.playtech.homework;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
@@ -32,8 +32,6 @@ public class BaseTest {
         options.addArguments("--disable-extensions");
 
         driver = new ChromeDriver(options);
-
-        driver = new ChromeDriver();
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
@@ -54,7 +52,8 @@ public class BaseTest {
             );
             acceptButton.click();
         } catch (Exception e) {
-            }
+            // Cookie banner was not present or not clickable
+        }
     }
 
     protected void scrollIntoView(WebElement element) {
